@@ -95,6 +95,8 @@ public class Manager {
 		
 		tx.commit();
 		
+		showMaxBodega();
+		
 	}
 
 	private void addCampo(String[] split) {
@@ -134,6 +136,21 @@ public class Manager {
 		}
 		tx.commit();
 	}
+	
+	public void showMaxBodega() {
+	    tx = session.beginTransaction();
+	  
+	    Query q = session.createQuery("select b from Bodega b order by size(b.vids) desc");
+	    q.setMaxResults(1);
+	    
+	    Bodega maxBodega = (Bodega) q.uniqueResult();	    
+	    
+	    System.out.println("Bodega con más cantidad de Vid después de la vendimia:");
+	    System.out.println(maxBodega);
+	    
+	    tx.commit();
+	}
+
 
 	
 }
