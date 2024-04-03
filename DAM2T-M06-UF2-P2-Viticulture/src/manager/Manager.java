@@ -108,7 +108,7 @@ public class Manager {
 	}
 
 	private void addBodega(String[] split) {
-		b = new Bodega(split[1]);
+		b = new Bodega(split[1], split[2]);
 		tx = session.beginTransaction();
 		
 		int id = (Integer) session.save(b);

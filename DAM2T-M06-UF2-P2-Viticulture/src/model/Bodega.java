@@ -17,32 +17,44 @@ import javax.persistence.Table;
 @Table(name= "bodega")
 public class Bodega {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "id", unique = true, nullable = true)
-	private int id_bodega;
-	
-	@Column(name = "nombre")
-	private String nombre;
-	
-	@OneToMany
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = true)
+    private int id_bodega;
+    
+    @Column(name = "nombre")
+    private String nombre;
+    
+    @Column(name = "provincia")
+    private String provincia;
+    
+    @OneToMany
     @JoinColumn(name = "bodega_id")
-	private List<Vid> vids;
-	
-	public Bodega() {}
-	
-	public Bodega(String nombre) {
-		this.nombre = nombre;
-		this.vids = new ArrayList<>();
-	}
+    private List<Vid> vids;
+    
+    public Bodega() {}
+    
+    public Bodega(String nombre, String provincia) {
+        this.nombre = nombre;
+        this.provincia = provincia;
+        this.vids = new ArrayList<>();
+    }
 
-	@Override
-	public String toString() {
-		return "Bodega [id_bodega=" + id_bodega + ", vids=" + Arrays.toString(vids.toArray()) + "]";
-	}
+    public String getProvincia() {
+        return provincia;
+    }
 
-	public List<Vid> getVids() {
-		return this.vids;
-	}
-	
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
+    }
+    
+    @Override
+    public String toString() {
+        return "Bodega [id_bodega=" + id_bodega + ", nombre=" + nombre + ", provincia=" + provincia + ", vids=" + Arrays.toString(vids.toArray()) + "]";
+    }
+
+    public List<Vid> getVids() {
+        return this.vids;
+    }
+    
 }
