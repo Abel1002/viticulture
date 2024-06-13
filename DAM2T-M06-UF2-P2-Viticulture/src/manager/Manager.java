@@ -1,4 +1,5 @@
 package manager;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
  
@@ -26,6 +27,7 @@ import model.Bodega;
 import model.Campo;
 import model.Entrada;
 import model.Vid;
+import model.Contador;
 import utils.TipoVid;
  
 public class Manager {
@@ -35,6 +37,9 @@ public class Manager {
 	private Transaction tx;
 	private Bodega b;
 	private Campo c;
+	private Contador co;
+	private boolean limpiar = true;
+	private int contadorVendimia = 1;
 	MongoCollection <Document> collection;
 	MongoDatabase database;
 	private Manager () {
@@ -62,6 +67,7 @@ public class Manager {
 		manageActions();
 		//showAllCampos();
 		//session.close();
+		
 	}
  
 	private void manageActions() {
@@ -81,6 +87,9 @@ public class Manager {
 					case "M":
 					    markAsVendimiado(entrada.getInstruccion().split(" "));
 					    break;
+					case "#":
+						vendimia();
+						break;
 					default:
 						System.out.println("Instruccion incorrecta");
 				}
@@ -99,7 +108,27 @@ public class Manager {
 //		session.save(b);
 //		tx.commit();
 //	}
-// 
+	
+	private void vendimia() {
+		
+		if(limpiar) {
+			
+			collection = database.getCollection("contadorvendimia");
+			collection.drop();
+			
+			limpiar = false;
+		}
+				
+		LocalDateTime fechaAhora = LocalDateTime.now();
+		
+		co = new Contador();
+		collection = database.getCollection("contadorvendimia");
+		Document document = new Document().append("fecha", fechaAhora).append("counter", contadorVendimia);
+		collection.insertOne(document);
+		
+		contadorVendimia++;
+	}
+
 	/*private void addVid(String[] split) {
 		Vid v = new Vid(TipoVid.valueOf(split[1].toUpperCase()), Integer.parseInt(split[2]));
 		tx = session.beginTransaction();
