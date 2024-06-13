@@ -197,6 +197,9 @@ public class Manager {
 	        System.out.println("La instrucción no tiene el formato esperado.");
 	    }
 	}
+	
+	//PRUEBA PRE EXAMEN
+	
 	/*private void showAllCampos() {
 		tx = session.beginTransaction();
 		Query q = session.createQuery("select c from Campo c");
