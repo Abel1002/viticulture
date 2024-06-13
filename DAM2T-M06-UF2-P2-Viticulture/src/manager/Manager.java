@@ -53,7 +53,7 @@ public class Manager {
 	    String uri = "mongodb://localhost:27017";
 	    MongoClientURI mongoClientURI = new MongoClientURI(uri);
 	    MongoClient mongoClient = new MongoClient(mongoClientURI);
-	    database = mongoClient.getDatabase("MongoDBArnauFigueras");
+	    database = mongoClient.getDatabase("Cruddatabase");
 	}
  
 	public void init() {
@@ -81,9 +81,6 @@ public class Manager {
 					case "M":
 					    markAsVendimiado(entrada.getInstruccion().split(" "));
 					    break;
-					case "#":
-//						vendimia();
-						break;
 					default:
 						System.out.println("Instruccion incorrecta");
 				}
@@ -96,13 +93,13 @@ public class Manager {
 		}
 	}
  
-	private void vendimia() {
-		this.b.getVids().addAll(this.c.getVids());
-		tx = session.beginTransaction();
-		session.save(b);
-		tx.commit();
-	}
- 
+//	private void vendimia() {
+//		this.b.getVids().addAll(this.c.getVids());
+//		tx = session.beginTransaction();
+//		session.save(b);
+//		tx.commit();
+//	}
+// 
 	/*private void addVid(String[] split) {
 		Vid v = new Vid(TipoVid.valueOf(split[1].toUpperCase()), Integer.parseInt(split[2]));
 		tx = session.beginTransaction();
@@ -169,7 +166,7 @@ public class Manager {
 		collection = database.getCollection("entrada");
 		for(Document documents : collection.find()) {
 			Entrada entry = new Entrada();
-			entry.setInstruccion(documents.getString("Entrada"));
+			entry.setInstruccion(documents.getString("instruccion"));
 			entradas.add(entry);
 		}
 		System.out.println(entradas.toString());
